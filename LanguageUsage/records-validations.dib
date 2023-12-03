@@ -1,0 +1,27 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!csharp
+
+using System;
+
+record Size (int Width, int Heigh);
+delegate Size Create (int w, int h);
+
+Size CreateRegular (int w, int h) =>
+    new Size(
+        w > 0 ? w : throw new ArgumentException(),
+        h > 0 ? h : throw new ArgumentNullException());
+
+Size CreateMirrored (int w, int h) =>
+    new Size(
+        w != 0 ? w : throw new ArgumentException(),
+        h != 0 ? h : throw new ArgumentException());
+
+Size CreateAny (int w, int h) =>
+    new Size(w, h);
+
+var regShape = CreateRegular(5, 5);
+
+Console.WriteLine(regShape);
