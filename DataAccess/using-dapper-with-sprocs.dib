@@ -1,0 +1,29 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Using Dapper with SPROCS
+
+```cs
+// Dapper with SPROC instead of ADO.NET
+using var conn = new SqlConnection(_connString);
+var sql = "spListAuthors"
+var authors = conn.Query<AuthorDTO>(sql,commandType: CommandType.StoredProcedure);
+
+// Dapper with SPROC instead of ADO.NET with SPROC
+using var conn = new SqlConnection(_connString);
+var sql = "spAuthorWithCourses";
+
+_logger.LogInformation("Executing stored proc: {}", sql);
+
+var author = result.ReadSingle<AuthorWithCoursesDTO>();
+var courses = result.Read<CourseDTO>().ToList();
+author.Courses.AddRange(courses);
+```
+Readability      [4]
+Testability      [1]
+Maintainability  [3] 
+Security         [4]
+Performance      [5]

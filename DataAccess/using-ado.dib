@@ -1,0 +1,31 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Using ADO.NET
+
+```cs
+var author = new List<AuthorDTO>();
+using var conn = new SqlConnection(_connString);
+var sql = "SELECT * FROM Author";
+using var cmd = new SqlCommand(sql, conn);
+conn.Open();
+using var reader = cmd.ExecuteReader();
+if (reader.HasRows)
+{
+    while (reader.Read())
+    {
+        var author = new AuthorDTO();
+        author.Id = reader.GetInt32(0);
+        author.Name = reader.GetString(1);
+        authors.Add(author);
+    }
+}
+```
+ Readability      [3]
+ Testability      [2]
+ Maintainability  [2]
+ Security         [2]
+ Performance      [5]

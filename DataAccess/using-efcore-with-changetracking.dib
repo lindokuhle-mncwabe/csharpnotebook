@@ -1,0 +1,47 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Using EF Core with Change Tracking
+
+```cs
+// List authors
+var authors = _dbContext.Authors
+    .Select(a => new AuthorDTO { Id = a.Id, Name = a.Name})
+    .ToList();
+
+// Author with Courses
+var author = _dbContext.Authors
+    .Include(author => author.Courses)
+    .ThenInclude(ca => ca.Course)
+    .Select(a => new AuthorWithCoursesDTO
+    {
+        Id = a.Id,
+        Name = a.Name
+        Courses = a.Courses.Select(c => new CourseDTO
+        {
+            Id = c.Id,
+            Title = c.Course.Title,
+            AuthorId = a.Id,
+            RoyaltyPercentage = c.RoyaltyPercentage
+        })
+        .ToList()
+    })
+    .SingleOrDefault(a => a.Id == id);
+
+// Updates
+var authorToUpdate = _dbContext.Author.Find(id);
+if (authorToUpdate is null) return NotFound();
+
+authorToUpdate.Name = value;
+
+_dbContext.Update(authorToUpdate);
+_dbContext.SaveChanges();
+```
+Readability      [4]
+Testability      [2]
+Maintainability  [3]
+Security         [4]
+Performance      [3]

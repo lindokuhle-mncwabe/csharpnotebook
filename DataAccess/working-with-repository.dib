@@ -1,0 +1,136 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Abstraction using an interface
+
+```cs
+// Interface
+public interface IAuthorRepository
+{
+    Task<IEnumerable<Author>> ListAsync();
+    Task<Author> GetByIdAsync(int id);
+    Task<Author> GetByIdAsyncWithCourses(int id);
+   
+    Task CreateAsync(Author newAuthor);
+    Task UpdateAsync(Author author);
+    Task DeleteAsync(Author author);
+}
+
+// Impl
+public Task<IEnumerable<Author>> ListAsync()
+{
+    return await _dbContext.Authors.ToListAsync();
+}
+public Task<Author> GetByIdAsync(int id)
+{
+    return _dbContext.Authors
+        .FirstOrDefaultAsync(author => author.Id == id);
+}
+public Task<Author> GetByIdAsyncWithCourses(int id)
+{
+    return _dbContext.Authors
+        .Include(author => author.Courses)
+        .ThenInclude(ca => ca.Course)
+        .FirstOrDefaultAsync(author => author.Id == id);
+}
+
+// What stll hurts?
+// - need an interface per entity
+// - need an implementation per entity
+// - need a method per interface and implementation per custom query 
+```
+Readability      [4]
+Testability      [5]
+Maintainability  [3]
+Security         [4]
+Performance      [3]
+
+#!markdown
+
+A Simpler Interface
+
+```cs
+// Interface
+public interface IAuthorRepository
+{
+    Task<IEnumerable<Author>> List(Express<Func<Author, bool>> predicate);
+    Task<Author> GetByIdAsync(int id);
+    Task CreateAsync(Author newAuthor);
+    Task UpdateAsync(Author author);
+    Task DeleteAsync(Author author);
+}
+
+// Impl...
+
+// Calling the interface implementation
+var steve = (await _authorRepository
+                .ListAsync(a => a.Name == "Steve Smith"))
+                .FirstOrDefault();
+
+// What still hurts?
+// - still too many interfaces and implementations
+// - still a lot of LINQ logic required in the calling code
+```
+
+Revised Interface
+
+```cs
+// Interface
+public interface IAuthorRepository
+{
+    Task<IEnumerable<Author>> List(AuthorSpecification spec = null);
+    Task<Author> GetBySpecAsync(AuthorSpecification spec);
+}
+
+// Impl...
+public Task<Author> GetBySpecAsync(AuthorSpecification spec)
+{
+    var query = _dbContext.Authors.AsQueryable();
+
+    if (spec.IncludeExpression != null)
+    {
+        query = spec.IncludeExpression(query);
+    }
+    return query.FirstOrDefaultAsync(spec.Predicate);
+}
+
+// Usage
+var spec = new AuthorByIdSpecification(id);
+var author = await _authorRepository.GetBySpecAsync(spec);
+
+var authorDTO = new AuthorWithCourseDTO
+{
+    Id = a.Id,
+    Name = a.Name
+    Courses = a.Courses.Select(c => new CourseDTO
+    {
+        Id = c.Id,
+        Title = c.Course.Title,
+        AuthorId = a.Id,
+        RoyaltyPercentage = c.RoyaltyPercentage
+    })
+    .ToList()
+};
+
+// What still hurts?
+// - still too many interfaces and implementations
+```
+Readability      [4]
+Testability      [5]
+Maintainability  [4]
+Security         [4]
+Performance      [3]
+
+#!markdown
+
+One Interface (to rule them all)
+
+```cs
+public interface IRepository<T> : IRepositoryBase<T>,
+    IReadRepositoryBase<T> where T : class
+{  
+}
+```

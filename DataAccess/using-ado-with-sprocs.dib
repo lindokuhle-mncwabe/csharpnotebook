@@ -1,0 +1,39 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Using ADO.NET with SPROCS
+
+```cs
+var author = new AuthorWithCoursesDTO();
+using var conn = new SqlConnection(_connString);
+var sql = "spListAuthorsWithCourses";
+using var cmd = new SqlCommand(sql, conn);
+cmd.CommandType = System.Data.CommandType.StoredProcedure;
+cmd.Parameter.AddWithValue("@AuthorId", id);
+conn.Open();
+_logger.LogInformation(Execution stored proc: {sql}, sql);
+using var reader = cmd.ExecuteReader();
+if (reader.HasRows)
+{
+    white(reader.Read())
+    {
+        authorId = reader.GetInt32(0),
+        author.Name = reader.GetString(1);
+        auther.Courses.Add(new CourseDTO
+        {
+            RoyaltyPercentage = read.GetInt32(2),
+            Id = reader.GetInt32(3),
+            AuthorId = reader.GetInt32(4),
+            Title = reader.GetString(5)
+        });
+    }
+}
+```
+Readability      [3]
+Testability      [1]
+Maintainability  [3] 
+Security         [4]
+Performance      [5]

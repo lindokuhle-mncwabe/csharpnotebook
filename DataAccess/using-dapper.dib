@@ -1,0 +1,34 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Using Dapper
+
+```cs
+// Dapper instead of ADO.NET
+using var conn = new SqlConnection(_connString);
+var sql = "SELECT * FROM Authors";
+
+_logger.LogInformation("Executing query: {sql}", sql);
+
+var authors = conn.Query<AuthorDTO>(sql).ToList();
+
+// Dapper instead of ADO.NET with SPROCS
+using var conn = new SqlConnection(_connString);
+var sql = @"
+SELECT Id, Name FROM Authors WHERE Id = @AuthorId
+
+SELECT CA.RoyaltyPercentage, CA.CourseId, CA.AuthorId, C.Title 
+FROM CourseAuthor CA
+INNER JOIN Courses C ON C.Id = CA.CourseId
+WHERE CA.AuthorId = @AuthorId";
+
+_logger.LogInformation("Executing query: {sql}", sql);
+
+var result = conn.QueryMultiple(sql, new { AuthorId = id });
+var author = result.ReadSingle<AuthorWithCoursesDTO>();
+var courses = result.Read<CourseDTO>().ToList();
+author.Courses.AddRange(courses);
+```
