@@ -1,0 +1,60 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+ES6 Arrow Function
+------------------
+
+Old function syntax
+```js
+    function myFunction(arg1, arg2) {
+        // function body
+    }
+
+    const myOtherFunction(arg1, arg2) {
+        // function body
+    }
+
+    // Arrow function notation
+    const add = (x, y) => x + y;
+```
+
+ES6 function syntax
+```js
+    // Arrow function with 2 or more args must use parenthesis
+    const add = (x, y) => x + y;
+    const add = function(x, y) {
+        return x + y;
+    }
+
+    // Arrow function with 1 arg parenthesis are optional
+    const double = number => number * 2;
+    const double = number => {
+        return number * 2;
+    }
+    const double = function(number) {
+        return number * 2;
+    }
+
+    // Arrow function with no arguments
+    const sayHello = () => console.log('Hello');
+
+    // Arrow function that returns an object
+    const getPersonData = () => ({
+        name: 'John Doe',
+        age: 34,
+        job: 'programmer',
+    });
+
+    // Arrow function with 2 or more statements
+    const myArrowFunction = (arg1, arg2) => {
+        console.log('Hello');
+        return arg1 + arg2
+    }
+
+    // Arrow function that take an object as args
+    const getFullName = ({firstName: 'John', lastName: 'Doe'}) =>
+        return `${firstNanem} ${lastName}`;
+```

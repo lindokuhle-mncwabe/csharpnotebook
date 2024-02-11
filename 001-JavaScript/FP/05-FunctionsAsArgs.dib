@@ -1,0 +1,47 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Functions passed as arguments
+-----------------------------
+
+Here is an example showing why you would want
+to pass functions as arguments
+```js
+    // Call all functions for a given number
+    const double = x => x * 2;
+    const subtractOne = x => x - 1;
+    const triple = x => x * 2;
+    const add5 = x => x + 5;
+    // ...
+    const myNumber = 24
+
+    const doubled = double(myNumber);
+    const minusOne = subtractOne(doubled);
+    console.log(minusOne); // 83
+```
+
+Here is a better, cleaner way to call the functions
+```js
+    const double = x => x * 2;
+    const subtractOne = x => x - 1;
+    const triple = x => x * 2;
+    const add5 = x => x + 5;
+
+    let number = 42; // must be var or let, not const
+
+    const functionsArray = [
+        double,
+        subtractOne,
+        triple,
+        add5,
+        Math.sqrt,
+    ];
+
+    //
+    functionsArray.forEach(func => number = func(number));
+
+    console.log(number);
+```

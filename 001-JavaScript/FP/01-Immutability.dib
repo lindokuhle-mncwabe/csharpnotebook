@@ -1,0 +1,33 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Immutability
+
+In functional programming x = 3, means "x is 3"
+
+The same way pi = 3.14159, could you imagine changing the value of pi.
+
+The Object-Orientated Programming example to update an object
+```js
+     var employee = new Employee('John', 60000);
+     employee.raiseSalary(1000);
+```
+
+Functional Programming example to upddte an object will look like this
+```js
+     const employee = {
+          name: 'John',
+          salary: 60000
+     }
+
+     const updatedEmployee = {
+          name: employee.name,
+          salary: employee.salary + 1000,
+     }
+
+   // In FP the original data always remain intact
+   // In FP we use const instead of let or var
+```

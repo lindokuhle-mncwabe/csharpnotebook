@@ -1,0 +1,119 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Changing object properties in OOP and FP
+-----------------------------------------
+
+The Object-Oriented Way
+```js
+    class Person {
+        constructor(firstName, lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+        }
+    }
+
+    const person = new Person('John', 'Doe'); //  Calls the constructor
+    // initials = JD
+    person.firstName = 'Dwayne';
+    person.initials = 'DD';
+
+    // ....
+
+    person.firstName = 'Ernie';
+    // Forgot to set initials! 
+
+    /*----------------------------------------------------*\
+        The most popular solution to this is to make the 
+        properties private and only accessible via
+        setters and getters
+    \*----------------------------------------------------*/
+
+    class Person {
+        constructor(firstName, lastName) {
+            this._firstName = firstName;
+            this._lastName = lastName;
+            this._initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+        }
+
+        setFirstName(newName) {
+            this._firstName = newName;
+            this._initials = `${this._firstName.charAt(0)}${this._lastName.charAt(0)}`;
+        }
+
+        // ...
+    }
+```
+
+The Functional Way
+
+```js
+    // In functional programming because of immutability 
+    // the data remains a constant source of truth
+
+    const createPersion = (firstName, lastName) => ({
+        firstName,
+        lastName,
+        initials: `${firstName.charAt(0)}${lastName.charAt(0)}`,
+    })
+
+    const person = createPerson('John', 'Doe');
+    const updatedPerson = createPerson('Dwayne', person.lastName);
+
+
+```
+
+#!markdown
+
+Data and Function (data + behaviour) handling in OOP & FP
+--------------------------------------------------------
+
+
+OOP Way, the data and functions are kept together
+```js
+    class TodoList {
+        constructor(items) {
+            this._items = items;
+        }
+
+        addItems(items) { /* ... */ }
+        sortItemsByMostUrgent() { /* ... */ }
+        getItems() { return this._items; }
+    }
+
+    class TodoItem {
+        constructor(name, deadline) {
+            this._name = name;
+            this._deadline = deadline;
+        }
+
+        changeName(newName) { /* ... */ }
+        changeDeadline(newDeadline) { /* ... */ }
+        getName() { return this._name; }
+        getDeadline() { return this._deadline; }
+    }
+```
+
+FP way, the data and functions are kept seperate
+```js
+    const todoItem1 = {
+        name: 'Learn functional programming',
+        deadline: Date.now(),
+    }
+
+    const todoItem2 = {
+        name: 'Get a great job',
+        deadline: Date.parse('01 Jan 2024 00:12:00 GMT'),
+    }
+
+    const todoList = [
+        todoItem1,
+        todoItem2,
+    ]
+
+    const sortByMostUrgent = (todos) => // ...
+```

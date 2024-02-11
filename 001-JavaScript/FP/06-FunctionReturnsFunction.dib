@@ -1,0 +1,29 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Function returning function
+---------------------------
+
+If you have to create a variations of function as in the 
+example below.
+```js
+    const double = x => x * 2;
+    const triple = x => x * 3;
+    const quadruple = x => x * 4;
+
+    //...
+```
+
+There is a more functional way of doing this
+```js
+    const createMultiplier = y => x => x * y
+    
+    const double = createMultiple(2);
+    const triple = createMultiple(3);
+    const quadruple = createMultiple(4);
+
+    console.log(double(3)) // 6
+```

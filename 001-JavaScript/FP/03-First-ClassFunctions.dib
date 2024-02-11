@@ -1,0 +1,49 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+First-Class Function
+--------------------
+
+In FP we can treat functions as values, as parameter and 
+as a function returned by another function
+
+```js
+    // Functions as values
+    const arrayOfFunctions = [
+        function sayHello() { /* ... */ }
+        function shakeHands() { /* ... */ }
+        function sayGoodbye() { /* ... */ }
+    ];
+
+    // Function as parameter
+    doSomething(function sayHello() { /* ... */ });
+
+    // Function as a returned function
+    function giveMeAFunction() {
+        return function() {
+            console.log('I am a function);
+        }
+    }
+```
+
+In FP we try our best to make every function a Pure Function
+A pure function is one that is not influenced by external state.
+
+In OOP you can generally remove a function from the class that
+it's in and have it working as it should.
+
+In FP we design functions specificly so that they work in isolation,
+all the data that a function needs to operate on is passed through
+the arguments. The name for this kind of function is called `Pure Function`
+```js
+    function add(a, b) {
+        return a + b;
+    }
+
+    function fullName(firstName, lastName) {
+        return `${firstName} ${lastName}`;
+    }
+```
