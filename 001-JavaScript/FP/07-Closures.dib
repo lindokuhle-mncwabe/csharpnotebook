@@ -1,0 +1,35 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Closure
+-------
+
+Let say that we want to define a class called
+Person in a functional way and use closure to
+define getters and setters for private variables
+```js
+    const Person = ({name, age, job}) => {
+        var _name = name;
+        var _age = age;
+        var _job = job;
+
+        return {
+            getName: () => _name,
+            getAge: () => _age,
+            getJob: () => _job,
+
+            setJob: newJob => _job = newJob,
+            setAge: newAge => _age = newAge,
+        };
+    }
+
+    const person = Person({name: 'Shaun', age: 25, job: 'developer'});
+    console.log(person.getName());      //-> Shaun
+    console.log(person._name);          //-> undefined
+    console.log(person.getJob());       //-> developer
+    person.setJob('senior developer')
+    console.log(person.getJob());       //-> senior developer  
+```

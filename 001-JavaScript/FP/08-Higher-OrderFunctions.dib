@@ -1,0 +1,46 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Higher-Order Functions
+----------------------
+
+Let's say that we need solve a problem of checking
+arguments in js. E.g.
+- Type checking..
+- Numbers is Positive
+- Array has specific number of elements
+```js
+    // This works, but we are violating the single responsibility
+    // principle but cluttering up our function with argument 
+    // checking
+    const divide = (x, y) => {
+        if (y === 0) {
+            console.log('Error: dividing by zero');
+            return null;
+        }
+
+        return x / y;
+    }
+```
+
+Let's see how we can improve this with Higher-Order 
+Functions
+```js
+    const divide = (x, y) => x / y;
+
+    const secondArgumentIsntZero = func =>
+        (...args) => {
+            if (args[1] === 0) {
+                console.log('Error: dividing by zero');
+                return null;
+            }
+
+            return func(...args);
+        }
+
+    const divideSafe = secondArgumentIsntZero(divide);
+    console.log(divideSafe(7,0)); // Error: dividing by zero
+```
