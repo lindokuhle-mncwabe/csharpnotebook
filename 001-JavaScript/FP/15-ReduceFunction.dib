@@ -1,0 +1,81 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+The Reduce Function
+-------------------
+
+Calculation a sum of array numbers
+```js
+    const numbers = [5, 7, 2, 40, 23, 14, 8, 4, 11];
+    const sum = numbers.reduce((acc, num) => acc + num, 0); // 0 is the starting value
+    console.log(sum);
+
+```
+
+Calculate a production of array numbers
+```js
+    const numbers = [5, 7, 2, 40, 23, 14, 8, 4, 11];
+    const prod = numbers.reduce((acc, num) => acc * num, 1); // 1 is the starting value
+    console.log(prod);
+```
+
+Calculate the average salary
+```js
+    const employee = [{
+        name: 'John Michael',
+        age: 54,
+        jobTitle: 'developer',
+        salary: 90000,
+    },{
+        name: 'Donald King',
+        age: 34,
+        jobTitle: 'engineer',
+        salary: 65000,
+    },{
+        name: 'Donald King',
+        age: 39,
+        jobTitle: 'developer',
+        salary: 75000,
+    },{
+        name: 'Donna',
+        age: 24,
+        jobTitle: 'secretary',
+        salary: 15000
+    },{
+        name: 'John Smith',
+        salary: 250000
+    },{
+        name: 'Karen Norris',
+        age: 55,
+        jobTitle: 'manager',
+        salary: 700000
+    },{
+        name: 'Karen Norris',
+        age: 44,
+        jobTitle: 'supervisor',
+        salary: 450000
+    }]
+    
+    const developers = 
+            employee.filter(employee => employee.jobTitle === 'developer');
+    const developerSalaries = 
+            developers.map(developer => developer.salary);
+    const totalDeveloperSalaries = 
+            developerSalaries.reduce((acc, salary) => acc + salary, 0);
+    const averageDeveloperSalary = 
+            totalDeveloperSalaries / developerSalaries.length;
+    console.log(averageDeveloperSalary);
+
+    const nonDevelopers = 
+          employee.filter(employee =>employee.jobTitle !== 'developer');
+    const nonDeveloperSalaries = 
+          nonDevelopers.map(nonDeveloper => nonDeveloper.salary);
+    const totalNonDeveloperSalaries = 
+          nonDeveloperSalaries.reduce((acc, salary) => acc + salary, 0);
+    const averageNonDeveloperSalary = 
+          totalNonDeveloperSalaries / nonDeveloperSalaries.length;
+    console.log(averageNonDeveloperSalary);
+```

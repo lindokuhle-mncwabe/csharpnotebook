@@ -1,0 +1,60 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+The Filter Function
+-------------------
+
+The procedural way to filter by even numbers
+```js
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const evenNumbers = [];
+    numbers.forEach(element => {
+        if (element % 2 === 0) {
+            evenNumbers.push(element);
+        }
+    });
+
+    console.log(evenNumbers);
+```
+
+Using the built-in Filter function
+```js
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const isEven = x => x % 2 === 0;
+    const evenNumbers = numbers.filter(isEven);
+    
+    console.log(evenNumbers); // [2, 4, 6, 8, 10]
+```
+
+Applying Filter on words in a string array
+```js
+    const words = [
+        `'hello',
+        `'goodbye',
+        `'the',
+        `'Antarctica',
+    ];
+    const isLongerThan5 = word => word.length > 5;
+    const longWords = words.filter(isLongerThan5);
+
+    console.log(longWords); // ['goodbye', 'Antarctica']
+```
+
+Using higher-order function to pass the minLength of 
+the word
+```js
+    const words = [
+        'hello',
+        'goodbye',
+        'the',
+        'Antarctica',
+    ];
+    const isLongerThenMinLength = minLength =>  
+        word => word.length > minLength;
+    const longWords = words.filter(isLongerThenMinLength(4));
+    
+    console.log(longWords);
+```

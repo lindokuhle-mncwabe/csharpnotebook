@@ -1,0 +1,28 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+The Build-In Map Function
+-------------------------
+
+Example of a procedural way of doubling
+the number in an array
+```js
+    const numbers = [1, 2, 3, 4, 5];
+    const doubledNumbers = [];
+    numbers.forEach(n => {
+        doubledNumbers.push(n * 2);
+    });
+
+    console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+```
+
+Same operation by using Map function
+```js
+    const numbers = [1, 2, 3, 4, 5];
+    const doubled = x => x * 2;
+    const doubledNumbers = numbers.map(doubled);
+    console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+```

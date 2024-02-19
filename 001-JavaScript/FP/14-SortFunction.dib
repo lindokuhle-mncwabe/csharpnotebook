@@ -1,0 +1,25 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+The Sort Function
+-----------------
+```js
+    const mixedUpNumbers = [10, 3, 4, 2, 5, 1, 8, 6, 7, 9]; 
+    const ascending = (a, b) => {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    }
+    const descending = (a, b) => {
+        if (a < b) return 1;
+        if (a > b) return -1;
+        return 0;
+    }
+    const sortedAscending = mixedUpNumbers.slice().sort(ascending);
+    const sortedDiscending = mixedUpNumbers.slice().sort(descending);
+    console.log(sortedAscending);
+    console.log(sortedDiscending);
+```

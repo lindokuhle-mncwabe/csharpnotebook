@@ -43,4 +43,5 @@ Functions
 
     const divideSafe = secondArgumentIsntZero(divide);
     console.log(divideSafe(7,0)); // Error: dividing by zero
+    console.log(divideSafe(8, 2)); // 4
 ```

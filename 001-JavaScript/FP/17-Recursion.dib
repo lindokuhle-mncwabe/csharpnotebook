@@ -1,0 +1,28 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Recursion
+---------
+
+```js
+    // Counting down
+    const countDown = x => {
+        if (x < 0) return; // to stop infinite calls
+        console.log(x);
+        countDown(x - 1);
+    }
+    
+    countDown(10);
+
+    // Counting up
+    const countUp = (counter, max) => {
+        if (counter > max) return;
+        console.log(counter);
+        countUp(counter + 1, max);
+    } 
+
+    countUp(0, 10);
+```

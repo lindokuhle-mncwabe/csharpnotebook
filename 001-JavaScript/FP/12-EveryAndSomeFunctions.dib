@@ -1,0 +1,45 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+The Built-in Every and Some Functions
+-------------------------------------
+
+Using Some function to check if any employee
+makes more that 1 million
+```js
+    const employee = [{
+        name: 'John Michael',
+        salary: 90000,
+    },{
+        name: 'Donald King',
+        salary: 65000,
+    },{
+        name: 'Donna',
+        salary: 1500000
+    },{
+        name: 'John Smith',
+        salary: 250000
+    }];
+
+    const makesMoreThanOneMillion = employee => 
+        employee.salary > 1000000;
+    const result = employee.some(makesMoreThanOneMillion);
+    console.log(result);
+```
+
+Using Every function to check if all form fields are filled
+```js
+    const formValues = [
+        'Shaun White',
+        '36',
+        'Sandton',
+        ''
+    ];
+
+    const isNotEmpty = string => !!string;
+    const allFieldsFilled = formValues.every(isNotEmpty);
+    console.log(allFieldsFilled);
+```

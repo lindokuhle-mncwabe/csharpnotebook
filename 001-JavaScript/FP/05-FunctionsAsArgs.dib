@@ -40,7 +40,6 @@ Here is a better, cleaner way to call the functions
         Math.sqrt,
     ];
 
-    //
     functionsArray.forEach(func => number = func(number));
 
     console.log(number);

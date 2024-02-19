@@ -1,0 +1,47 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Currying and partial application
+--------------------------------
+
+Partial function example
+```js
+    // A function that adds 3 numbers x, y, z
+    const add = (x, y, z) => x + y + z;
+
+    // Partial functions to set unchanging values
+    const addToTwoNumbers = x => (y, z) =>
+        add(x, y, z);
+    const addToOneNumber = (x, y) => z =>
+        add(x, y, z);
+
+    const add5To = addToTwoNumbers(5);
+    const sum5   = add5To(5, 10);
+
+    const add5and5To = addToOneNumber(5, 5);
+    const sum55      = add5and5To(10);
+
+    console.log(sum5); 
+    console.log(sum55);
+
+```
+
+Currying function example
+```js
+    // A Currying function
+    const addPartial = 
+        x =>
+        y => 
+        z => add(x, y, z);
+
+    const add5      = addPartial(5);
+    const add5and6  = add5(6);
+    const sum       = add5and6(10);
+
+    console.log(sum);
+    console.log(addPartial(5)(6)(10));
+
+```
