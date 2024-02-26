@@ -2,11 +2,18 @@
     CHALLENGE 1
 \*----------------------------------*/
 
-const map = (arr, fn) => 
-    arr.reduce((acc, item) => [
-        ...acc,
-        fn(item),
-    ], []);  
+
+/* sol#1
+---------------------------
+    const map = (arr, fn) =>
+    {
+        let newArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            newArr.push(fn(arr[i]));
+        }
+        return newArr;
+    }    
+*/
 
 /* sol#2
 ---------------------------   
@@ -20,17 +27,15 @@ const map = (arr, fn) =>
     }    
 */
 
-/* sol#1
----------------------------
-    const map = (arr, fn) =>
-    {
-        let newArr = [];
-        for (let i = 0; i < arr.length; i++) {
-            newArr.push(fn(arr[i]));
-        }
-        return newArr;
-    }    
-*/
+/* sol#3
+---------------------------*/
+
+const map = (arr, fn) => 
+    arr.reduce((acc, item) => [
+        ...acc,
+        fn(item),
+    ], []);  
+
 
 /*----------------------------------*\
     Input -> Output Tests
