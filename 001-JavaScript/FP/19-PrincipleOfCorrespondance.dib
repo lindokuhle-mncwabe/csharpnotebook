@@ -1,0 +1,40 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Principle of Correspondence
+---------------------------
+
+```js
+// factorial with recursion
+function factorialRecursion(n) {
+  return n === 0 ? 1 : n * factorialRecursion(n - 1);
+}
+
+// factorial with for loop
+function factorialWhileLoop(n) {
+  var result = 1;
+  while (n > 0) {
+    result *= n;
+    n -= 1;
+  }
+  return result;
+}
+
+// factorial with closure
+function factorialClosure(n) {
+  return (function (result) {
+    while (n > 1) {
+      result *= n;
+      n -= 1;
+    }
+    return result;
+  }(1))
+}
+
+console.log(factorialRecursion(5));
+console.log(factorialWhileLoop(5));
+console.log(factorialClosure(5));
+```

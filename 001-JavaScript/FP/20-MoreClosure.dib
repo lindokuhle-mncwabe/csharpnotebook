@@ -1,0 +1,35 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+More Closure Examples
+---------------------
+
+```js
+
+// data poluting global scope
+var names = ['zero', 'one', 'two', 
+    'three', 'four', 'five', 
+    'six', 'seven', 'eight', 
+    'nine', 'ten'];
+var digitNamePulution = function(n) {
+  return names[n];
+};
+console.log(digitNamePulution(3)); // three
+
+// data hiding using closure
+// the inner function suvives the outer function
+var digitNameClosure = (function() {
+  var names = ['zero', 'one', 'two', 
+    'three', 'four', 'five', 
+    'six', 'seven', 'eight', 
+    'nine', 'ten'];
+  return function(n) {
+    return names[n];
+  }  
+}());
+console.log(digitNameClosure(3)); // three
+
+```

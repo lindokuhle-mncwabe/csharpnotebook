@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Getters And Setters
+-------------------
+
+```js
 
 // getters and setters
 function makeTemperature(degrees) {
@@ -20,3 +30,5 @@ function makeTemperature(degrees) {
 let temp = makeTemperature(25);
 console.log(temp.celsius);
 console.log(temp.fahrenheit);
+
+```

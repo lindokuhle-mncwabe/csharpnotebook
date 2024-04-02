@@ -1,0 +1,23 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+FunctionArgs
+------------
+
+```js
+function sum() {
+  var i,
+      n = arguments.length,
+      total = 0;
+  for (i = 0; i < n; i++) {
+    total += arguments[i];
+  }
+  return total;
+}
+
+var ten = sum(1, 2, 3, 4);
+console.log(ten);
+```
