@@ -1,0 +1,38 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Modeling Power of Records Type
+------------------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+abstract record PersonalName;
+
+record CommonName(string FirstName, string LastName) : PersonalName;
+record MononymousName(string Name) : PersonalName;
+record FullName(string FirstName, string MiddleName, string LastName) : PersonalName;
+
+// polymorphic assignment usage
+PersonalName name = new CommonName("John", "Adams");
+
+// dictory usage
+var names = new Dictionary<string, PersonalName> {
+  { "John", new CommonName("John", "Adams") },
+  { "Madonna", new MononymousName("Madonna") },
+  { "John Quincy", new FullName("John", "Quincy", "Adams") }
+};
+
+// linq usage
+var fullNames = names.Values.OfType<FullName>().Select(n => n);
+
+foreach (var n in fullNames) {
+  WriteLine($"{n.FirstName} {n.MiddleName} {n.LastName}");
+}
+
+```

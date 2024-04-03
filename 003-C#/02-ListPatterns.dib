@@ -1,0 +1,37 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+List Patterns And Switches
+--------------------------
+
+```csharp
+using System;
+using static System.Console;
+
+string[] names = { 
+  "John", "Mary", "David", "Sarah", "Michael" 
+};
+
+string FormatDelimeter(string[] names) =>
+  names switch {
+    [] => string.Empty,
+    [var single] => single,
+    [.. string[] many, string last] =>
+      string.Join(", ", many) + " and " + last,
+};
+
+string FormatAcademic(string[] names) =>
+  names switch {
+    [] => string.Empty,
+    [var single] => single,
+    [var first, var second] => first + ", " + second,
+    [var first, ..] => first + ", et al.",
+};
+
+WriteLine(FormatDelimeter(names)); //John, Mary, David, Sarah and Michael
+WriteLine(FormatAcademic(names)); //John, et al.
+
+```

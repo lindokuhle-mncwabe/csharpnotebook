@@ -1,0 +1,40 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Record Type Destructuring
+-------------------------
+
+```csharp
+using System;
+
+// user type
+record User(
+  int Id,
+  string FirstName,
+  string LastName,
+  string Email,
+  DateOnly DateOfBirth);
+
+User GetUser() {
+  int id = 1;
+  string firstName = "Jonathan";
+  string lastName = "Duwein";
+  string email = "jonathan@example.com";
+  DateOnly dateOfBirth = new DateOnly(1990, 1, 1);
+
+  return new User(id, firstName, lastName, email, dateOfBirth);
+}
+// user destructuring
+var (
+  Id,
+  FirstName,
+  LastName,
+  Email,
+  DateOfBirth) = GetUser();
+
+WriteLine($"{Id} {FirstName} {LastName} {Email} {DateOfBirth}");
+
+```

@@ -1,22 +1,2 @@
 
-// getters and setters
-function makeTemperature(degrees) {
-  return {
-    get celsius() {
-      return degrees;
-    },
-    set celsius(value) {
-      temp = value;
-    },
-    get fahrenheit() {
-      return degrees * 1.8 + 32;
-    },
-    set fahrenheit(value) {
-      temp = (value - 32) / 1.8;
-    }
-  };
-}
 
-let temp = makeTemperature(25);
-console.log(temp.celsius);
-console.log(temp.fahrenheit);

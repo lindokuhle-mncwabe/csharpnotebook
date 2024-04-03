@@ -1,0 +1,30 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Type Safe Code Without Classes
+------------------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+SoundSample sample = new(0.5f);
+SoundLevel level = sample.level;
+
+WriteLine($"The sample is {sample.Left} and the level is {level.Decibels} dB");
+
+// Type safe code with memory overhead and virtual method overhead of a class
+record struct SoundSample(float Left) {
+  public float Absolute => Math.Abs(Left);
+  public SoundLevel level => new((float)(20 * Math.Log10(Absolute)));
+};
+
+record struct SoundLevel(float Decibels) {
+  public SoundSample Absolute => new((float)Math.Pow(10, Decibels / 20));
+};
+
+```

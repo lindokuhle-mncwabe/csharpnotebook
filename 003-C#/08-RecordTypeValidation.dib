@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Validation Of Record Type Values
+--------------------------------
+
+```csharp
 
 using System;
 using static System.Console;
@@ -25,3 +35,5 @@ Size anySize = CreateAny(-100, 0); // Size { Width = -100, Height = 0 }
 WriteLine(regularSize);
 WriteLine(mirroredSize);
 WriteLine(anySize);
+
+```
