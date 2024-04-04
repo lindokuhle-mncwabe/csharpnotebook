@@ -1,0 +1,31 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Linq Aggregate Method
+-----------------------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+// using foreach loop
+var numbers = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+var sum = 0;
+foreach (var number in numbers) {
+  sum += number;
+}
+WriteLine(sum); // 55
+
+// refactor into aggregate linq method
+int sum1 = numbers.Aggregate((acc, number) => acc + number);
+WriteLine(sum1); // 55
+
+// refactor into aggregate linq method with seed
+int sum2 = numbers.Aggregate(0, (acc, number) => acc + number);
+WriteLine(sum2); // 55
+
+```

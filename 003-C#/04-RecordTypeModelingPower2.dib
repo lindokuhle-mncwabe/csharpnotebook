@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Modeling Power of Records Type
+------------------------------
+
+```csharp
 
 using System;
 using static System.Console;
@@ -32,3 +42,5 @@ Citation[] citations = GetCitations();
 foreach (var citation in citations) {
   WriteLine(citation.ToFriendlyLabel());
 }
+
+```
