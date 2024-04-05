@@ -1,0 +1,59 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Immutability In Classes
+-----------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+// class immutability
+class Person {
+  public string Name { get; private set; }
+  public int Age { get; private set; }
+  public string Status { get; private set; }
+  public string Email { get; private set; }
+
+  private Person() { }
+
+  public static Person CreateNew(string name, int age, string status, string email) =>
+    new Person {
+      Name = name,
+      Age = age,
+      Status = status,
+      Email = email
+    };
+
+  public Person Update(int age, string status) =>
+    CreateNew(Name, age, status, Email);  
+
+  public Person MigrateProfile(string name, int age, string status) =>
+    CreateNew(name, age, status, Email);
+}
+
+// create a person
+readonly Person person = Person.CreateNew("Jane", 30, "Single", "jane@example.com");
+WriteLine($"{person.Name} | {person.Age} | {person.Status} | {person.Email}");
+
+readonly Person updPerson = person.Update(age: 33, status: "Engaged");
+WriteLine($"{updPerson.Name} | {updPerson.Age} | {updPerson.Status} | {updPerson.Email}");
+
+readonly Person migPerson = updPerson.MigrateProfile(name: "Tris", age: 36, status: "Married");
+WriteLine($"{migPerson.Name} | {migPerson.Age} | {migPerson.Status} | {migPerson.Email}");
+
+// error: The property or indexer 'Person.Name' 
+// cannot be used in this context because the set accessor is inaccessible
+person.Name = "Jane";
+
+// error: A readonly field cannot be assigned to
+person = Person.CreateNew("Jane", 30, "jane@example.com");
+
+// error: 'Person.Person()' is inaccessible due to its protection level
+Person p = new Person(); 
+
+```

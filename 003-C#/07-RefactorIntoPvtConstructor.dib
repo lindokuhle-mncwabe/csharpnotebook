@@ -1,0 +1,61 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Factor Classes Into Private Constructor
+---------------------------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+// class using public constructor
+class Person {
+  public string Name;
+  public int Age;
+  public string Email;
+  public Person(string name, int age, string email) {
+    // on error the constructor is forced to throw an 
+    // exception or return a new valid person
+    Name = (!string.IsNullOrEmpty(name) ? name
+    : throw new ArgumentNullException(nameof(name)));
+
+    Email = (!string.IsNullOrEmpty(email) ? email
+    : throw new ArgumentNullException(nameof(email)));
+
+    Age = age;
+  }
+}
+
+// class using private constructor and static factory methods
+// this is called a smart constructor
+class BetterPerson {
+  public string Name;
+  public int Age;
+  public string Email;
+
+  private BetterPerson() { }
+
+  // on error the factory method is not forced to throw an error
+  // if a valid person cannot be created. 
+  // you can even choose to return an Optional<BetterPerson>.
+  #nullable enable
+  public static BetterPerson? CreateNew(string name, int age, string email) =>
+    string.IsNullOrEmpty(name) ? null
+    : new() { Name = name, Age = age, Email = email };
+
+  #nullable enable
+  public static BetterPerson? CreateWithExistingEmail(string name,
+    int age, string email) =>
+    string.IsNullOrEmpty(email) || string.IsNullOrEmpty(email) ? null
+    : (!Exists(email)) ? null
+    : new() { Name = name, Age = age, Email = email };
+
+  private static bool Exists(string email) =>
+    true;
+}
+
+```

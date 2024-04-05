@@ -2,33 +2,3 @@
 using System;
 using static System.Console;
 
-// model citation
-record Citation(string Text);
-record BookTitle(string Title, Guid Isbn) : Citation(Title);
-record BookAuthor(string Name, Guid Isbn) : Citation(Name);
-record WebSite(string ArtitleName, string Url) : Citation(ArtitleName);
-
-// seed citations
-Citation[] GetCitations() {
-  return new Citation[] {
-    new BookTitle("C# 9 and .NET 5", Guid.NewGuid()),
-    new BookAuthor("Mark J. Price", Guid.NewGuid()),
-    new WebSite("Microsoft Docs", "https://docs.microsoft.com")
-  };
-}
-// switch citations to friendly labels
-static string ToFriendlyLabel(this Citation citation) =>
-  citation switch {
-    BookTitle book => $"{book.Title} ({book.Isbn})",
-    BookAuthor author => $"{author.Name} ({author.Isbn})",
-    WebSite site => $"{site.ArtitleName} - ({site.Url})",
-    _ => "Unknown"
-  };
-
-// get citations
-Citation[] citations = GetCitations();
-
-// display citations
-foreach (var citation in citations) {
-  WriteLine(citation.ToFriendlyLabel());
-}
