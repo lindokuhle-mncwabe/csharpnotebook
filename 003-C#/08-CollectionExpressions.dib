@@ -1,0 +1,29 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Collection Expression
+---------------------
+
+```csharp
+
+ // C# 12 Collection Expressions
+
+var numbers = new [] { 1, 2, 3, };
+int[] numbers2 = [ 1, 2, 3 ];
+
+var words = new[] { "one", "two", "three" };
+List<string> words2 = [ "one", "two", "three" ];
+
+int[] row0 = [ 1, 2, 3 ];
+int[] row1 = [ 4, 5, 6 ];
+int[] row2 = [ 7, 8, 9 ];
+int[] rows = [ .. row0, .. row1, .. row2 ];
+
+foreach (var item in rows) {
+    WriteLine(item);
+}
+
+```

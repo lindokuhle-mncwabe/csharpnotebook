@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Switch Expression
+-------------------------------
+
+```csharp
 
 using System;
 using static System.Console;
@@ -29,3 +39,5 @@ decimal GetInitalSettingSwitch(PowerInverter inverter) =>
 
 WriteLine(GetInitalSetting(new PowerInverter(0.5m)));
 WriteLine(GetInitalSettingSwitch(new PowerInverter(0.5m)));
+
+```

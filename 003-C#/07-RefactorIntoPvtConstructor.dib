@@ -54,8 +54,7 @@ class BetterPerson {
     : (!Exists(email)) ? null
     : new() { Name = name, Age = age, Email = email };
 
-  private static bool Exists(string email) =>
-    true;
+  private static bool Exists(string email) => true;
 }
 
 ```

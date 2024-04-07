@@ -11,9 +11,8 @@ List Patterns And Switches
 using System;
 using static System.Console;
 
-string[] names = { 
-  "John", "Mary", "David", "Sarah", "Michael" 
-};
+// C# 12
+string[] names = [ "John", "Mary", "David", "Sarah", "Michael" ];
 
 string FormatDelimeter(string[] names) =>
   names switch {
