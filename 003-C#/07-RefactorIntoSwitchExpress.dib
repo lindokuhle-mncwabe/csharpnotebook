@@ -15,7 +15,7 @@ using static System.Console;
 record PowerInverter(decimal MotorCapacity);
 
 // IFs
-decimal GetInitalSetting(PowerInverter inverter) {
+decimal GetInitalSettingOld(PowerInverter inverter) {
   if (inverter.MotorCapacity >= 0.4m
     && inverter.MotorCapacity <= 0.75m) return 6.0m;
   if (inverter.MotorCapacity >= 1.5m
@@ -28,16 +28,16 @@ decimal GetInitalSetting(PowerInverter inverter) {
 }
 
 // switch expression
-decimal GetInitalSettingSwitch(PowerInverter inverter) =>
+decimal GetInitalSettingNew(PowerInverter inverter) =>
   inverter.MotorCapacity switch {
     >= 0.4m and <= 0.75m => 6.0m,
     >= 1.5m and <= 3.7m => 4.0m,
     >= 5.5m and <= 7.5m => 3.0m,
     >= 11.0m and <= 55.0m => 2.0m,
     _ => 0.0m
-  };
+};
 
-WriteLine(GetInitalSetting(new PowerInverter(0.5m)));
-WriteLine(GetInitalSettingSwitch(new PowerInverter(0.5m)));
+WriteLine(GetInitalSettingOld(new PowerInverter(0.5m)));
+WriteLine(GetInitalSettingNew(new PowerInverter(0.5m)));
 
 ```
