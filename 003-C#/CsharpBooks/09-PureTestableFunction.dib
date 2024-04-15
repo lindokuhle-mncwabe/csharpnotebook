@@ -1,0 +1,110 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Pure Deterministic Core Function
+--------------------------------
+
+```csharp
+
+using System;
+using static System.Console;
+
+public static IEnumerable<T> TakeSequence<T>(
+this IEnumerable<T> source, int count) {
+  if (count <= 0) {
+    yield break;
+  }
+  var queue = new Queue<T>(count);
+  foreach(var item in source) {
+    if(queue.Count == count) {
+      queue.Dequeue();
+    }
+    queue.Enqueue(item);
+  }
+  foreach (var item in queue) {
+    yield return item; // lazyly return the items
+  }
+}
+
+/*---------------------------------------------------------------*\
+  Given Empty Sequence when N=0 or N=5 return Empty Sequence
+\*---------------------------------------------------------------*/
+
+// Test# 1
+WriteLine("Given Empty Seq when N=0 return Enumerable.Empty<int>()");
+WriteLine("Test #1: {0}", 
+  (Enumerable.Empty<int>().ToArray()    // expected
+  ==
+  (Enumerable.Empty<int>())             // actual
+  .TakeSequence(0)
+  .ToArray()) == true ? "Passed" : "Failed!");
+
+WriteLine("-------------------------------------------------------");
+
+// Test #2
+WriteLine("Given Empty Seq when N=5 return Enumerable.Empty<int>()");
+WriteLine("Test #2: {0}", 
+  (Enumerable.Empty<int>().ToArray()   // expected
+  ==
+  (Enumerable.Empty<int>())            // actual
+  .TakeSequence(5)
+  .ToArray()) == true ? "Passed" : "Failed!");
+
+/*---------------------------------------------------------------*\
+  Given NonEmpty Sequence when N=0 return Empty Sequence
+\*---------------------------------------------------------------*/
+
+WriteLine("-------------------------------------------------------");
+WriteLine("Given NonEmpty Seq when N=0 return Enumerable.Empty<int>()");
+WriteLine("Test #3: {0}", 
+  (Enumerable.Empty<int>().ToArray()    // expected
+  ==
+  (new int[] {1, 2, 3, 4, 5})           // actual
+  .TakeSequence(0)
+  .ToArray()) == true ? "Passed" : "Failed!");
+
+/*---------------------------------------------------------------*\
+  Given NonEmpty Sequence when N>=Seq.Length return entire Seq
+\*---------------------------------------------------------------*/
+
+WriteLine("-------------------------------------------------------");
+WriteLine("Given NonEmpty Seq when 1=N[>=Seq.Length] return entire Seq");
+WriteLine("Test #4: {0}", 
+  (new int[] {1}.ToArray().Length // expected
+  ==
+  (new int[] {1})                 // actual
+  .TakeSequence(1)
+  .ToArray().Length) == true ? "Passed" : "Failed!");
+
+
+WriteLine("-------------------------------------------------------");
+WriteLine("Given NonEmpty Seq when 2=N[>=Seq.Length] return entire Seq");
+WriteLine("Test #5: {0}", 
+  (new int[] {1}.ToArray().Length // expected
+  ==
+  (new int[] {1})                 // actual
+  .TakeSequence(1)
+  .ToArray().Length) == true ? "Passed" : "Failed!");
+
+WriteLine("-------------------------------------------------------");
+WriteLine("Given NonEmpty Seq when 3=N[>=Seq.Length] return entire Seq");
+WriteLine("Test #6: {0}", 
+  (new int[] {1, 2, 3}.ToArray().Length // expected
+  ==
+  (new int[] {1, 2, 3})                 // actual
+  .TakeSequence(3)
+  .ToArray().Length) == true ? "Passed" : "Failed!");
+
+WriteLine("-------------------------------------------------------");
+WriteLine("Given NonEmpty Seq when 4=N[>=Seq.Length] return entire Seq");
+WriteLine("Test #7: {0}", 
+  (new int[] {1, 2, 3}.ToArray().Length // expected
+  ==
+  (new int[] {1, 2, 3})                 // actual
+  .TakeSequence(4)
+  .ToArray().Length) == true ? "Passed" : "Failed!");
+
+```

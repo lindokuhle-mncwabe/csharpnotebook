@@ -1,11 +1,25 @@
 
-#r "sdk:Microsoft.NET.Sdk.Web"
+using System;
+using static System.Console;
 
-using Microsoft.AspNetCore.Builder;
+public static IEnumerable<T> TakeSequence<T>(
+    this IEnumerable<T> source, int count) {
+  var queue = new Queue<T>(count);
+  foreach(var item in source) {
+    if(queue.Count == count) {
+      queue.Dequeue();
+    }
+    queue.Enqueue(item);
+  }
+  foreach (var item in queue) {
+    yield return item; // lazyly return the items
+  }
+}
 
-var app = WebApplication.Create();
-app.MapGet("/", () => "Hello world");
-app.Run();
+/*---------------------------------------------------------------*\
+  Given Empty Sequence when N=0 or N=5 return Empty Sequence
+\*---------------------------------------------------------------*/
 
-Console.WriteLine("Hello World!");  
+// Expected: Empty
+WriteLine((Enumerable.Empty<int>()).TakeSequence(0));
 

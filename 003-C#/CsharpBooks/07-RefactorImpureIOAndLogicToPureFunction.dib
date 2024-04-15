@@ -1,8 +1,16 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Pure Function
+---------------------------
+
+```csharp
 
 using System;
 using static System.Console;
-
-// Refactor from Impure IO And Logic to Pure Function
 
 public static void CompareTwoStringsImpurely() {
   WriteLine("Enter the first value: ");
@@ -75,3 +83,5 @@ WriteLine("Test #3: {0}",
   ==
   CompareTwoStringsPurely("a", "a").ToString())  // actual
   == true ? "Passed" : "Failed!");
+
+```
