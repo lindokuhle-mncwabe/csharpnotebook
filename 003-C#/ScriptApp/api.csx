@@ -8,4 +8,3 @@ app.MapGet("/", () => "Hello world");
 app.Run();
 
 Console.WriteLine("Hello World!");  
-
