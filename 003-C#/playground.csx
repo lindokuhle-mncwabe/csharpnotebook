@@ -48,6 +48,29 @@ public static StringCompareResult CompareTwoStringsPurely(string str1, string st
   }
 }
 
+// Thirdly: I want to build the IO around the pure function
+public static void CompareTwoStringsShell() {
+  // I/O code | Read from console | could Read from Db
+  WriteLine("Enter the first value: ");
+  var str1 = ReadLine();
+  WriteLine("Enter the second value: ");
+  var str2 = ReadLine();
+  // Pure unchanging code
+  var result = CompareTwoStringsPurely(str1, str2);
+  // I/O code | Write to console | could Write to Db
+  switch (result) {
+    case StringCompareResult.Bigger:
+      WriteLine("The first value is greater than the second value.");
+      break;
+    case StringCompareResult.Smaller:
+      WriteLine("The first value is less than the second value.");
+      break;
+    case StringCompareResult.Equal:
+      WriteLine("The first value is equal to the second value.");
+      break;
+  }
+}
+
 /*------------------------------------------------------------------------*\
   Given Input when str1='a' and str2='b' return StringCompareResult.Bigger
 \*------------------------------------------------------------------------*/

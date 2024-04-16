@@ -6,7 +6,7 @@
 
 Abstraction using an interface
 
-```cs
+```csharp
 // Interface
 public interface IAuthorRepository
 {
@@ -52,7 +52,7 @@ Performance      [3]
 
 A Simpler Interface
 
-```cs
+```csharp
 // Interface
 public interface IAuthorRepository
 {
@@ -77,7 +77,7 @@ var steve = (await _authorRepository
 
 Revised Interface
 
-```cs
+```csharp
 // Interface
 public interface IAuthorRepository
 {
@@ -128,7 +128,7 @@ Performance      [3]
 
 One Interface (to rule them all)
 
-```cs
+```csharp
 public interface IRepository<T> : IRepositoryBase<T>,
     IReadRepositoryBase<T> where T : class
 {  

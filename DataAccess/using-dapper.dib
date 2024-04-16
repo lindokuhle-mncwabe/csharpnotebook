@@ -6,7 +6,7 @@
 
 Using Dapper
 
-```cs
+```csharp
 // Dapper instead of ADO.NET
 using var conn = new SqlConnection(_connString);
 var sql = "SELECT * FROM Authors";

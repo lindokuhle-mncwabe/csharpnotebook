@@ -6,7 +6,7 @@
 
 Using EF Core with Change Tracking
 
-```cs
+```csharp
 // List authors
 var authors = _dbContext.Authors
     .Select(a => new AuthorDTO { Id = a.Id, Name = a.Name})

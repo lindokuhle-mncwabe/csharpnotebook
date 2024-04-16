@@ -6,7 +6,7 @@
 
 Using ADO.NET with SPROCS
 
-```cs
+```csharp
 var author = new AuthorWithCoursesDTO();
 using var conn = new SqlConnection(_connString);
 var sql = "spListAuthorsWithCourses";

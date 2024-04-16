@@ -6,7 +6,7 @@
 
 Using ADO.NET
 
-```cs
+```csharp
 var author = new List<AuthorDTO>();
 using var conn = new SqlConnection(_connString);
 var sql = "SELECT * FROM Author";

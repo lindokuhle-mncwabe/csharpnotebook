@@ -6,7 +6,7 @@
 
 Using Dapper with SPROCS
 
-```cs
+```csharp
 // Dapper with SPROC instead of ADO.NET
 using var conn = new SqlConnection(_connString);
 var sql = "spListAuthors"
