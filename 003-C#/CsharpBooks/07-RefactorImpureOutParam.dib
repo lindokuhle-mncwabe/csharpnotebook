@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Impure Out Parameter
+-----------------------------
+
+```csharp
 
 using System;
 using static System.Console;
@@ -94,3 +104,5 @@ WriteLine("Sum : {0}, Dif :{1} , Pro :{2} , Quo: {3}",
 //   == true ? "Passed" : "Failed!");
 
 // WriteLine("-------------------------------------------------------");
+
+```
