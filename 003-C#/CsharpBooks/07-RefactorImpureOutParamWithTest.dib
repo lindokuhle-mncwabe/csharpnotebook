@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Impure Out Param With Test
+-----------------------------------
+
+```csharp
 
 using System;
 using static System.Console;
@@ -59,3 +69,5 @@ if (!assertPass) {
 }
 
 WriteLine("--------------------------------------------------");
+
+```
