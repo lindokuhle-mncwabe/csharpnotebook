@@ -1,0 +1,63 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Duplicate-free and Immutable Collection
+-----------------------------------------------------
+
+```csharp
+
+using System;
+using System.Collections.Immutable;
+using System.Text.Json;
+using static System.Console;
+
+// refactor into a collection that cannot hold duplicate values
+
+public static List<string> GetPoorList() {
+    List<string> list = new List<string>();
+    list.Add("Hello"); // bad mutation
+    list.Add("World"); // bad mutation
+    list.Add("Hello"); // bad mutation, allows duplicate
+    list.Add("World"); // bad mutation, allows duplicate
+    return list;
+}
+var poorList = GetPoorList();
+poorList.Add("I just mutated the list");
+foreach(var item in poorList) {
+    WriteLine(item);
+}
+WriteLine("------------------------------------------");
+
+public static ImmutableList<string> GetBetterList() {
+    ImmutableList<string> list = ImmutableList<string>.Empty;
+    list = list.Add("Hello"); // no mutation
+    list = list.Add("World"); // no mutation
+    list = list.Add("Hello"); // no mutation, allows duplicate
+    list = list.Add("World"); // no mutation, allows duplicate
+    return list;
+}
+var betterList = GetBetterList();
+betterList.Add("I just mutated the list"); // egnored
+foreach(var item in GetBetterList()) {
+    WriteLine(item);
+}
+WriteLine("------------------------------------------");
+
+public static ImmutableHashSet<string> GetBestList() {
+    ImmutableHashSet<string> list = ImmutableHashSet<string>.Empty;
+    list = list.Add("Hello"); // no mutation
+    list = list.Add("World"); // no mutation
+    list = list.Add("Hello"); // duplicate blocked
+    list = list.Add("World"); // duplicate blocked
+    return list;
+}
+var bestList = GetBestList();
+bestList.Add("I just mutated the list"); // egnored
+foreach(var item in GetBestList()) {
+    WriteLine(item);
+}
+
+```
