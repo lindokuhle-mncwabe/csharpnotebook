@@ -14,47 +14,106 @@ using static System.Console;
 \*--------------------------------------------------------------*/
 
 public record Customer(Guid CustomerId,
-  string FirstName, string LastName, string Email, string Phone)
+  string FirstName, string LastName, string Email, string Phone
+)
 {
   public static Customer MapCustomerCreateCommandToCustomer(
-    CustomerCreateCommand command) 
-    => new Customer(Guid.NewGuid(), command.FirstName, 
-        command.LastName, command.Email, command.Phone);
+    CustomerCreateCommand command
+  ) => new Customer(Guid.NewGuid(), 
+         command.FirstName, command.LastName, 
+         command.Email, command.Phone
+       );
 
   public static CustomerCreateCommand BuildCustomerCreateCommand(
-    string firstName, string lastName, string email, string phone) 
-    => new CustomerCreateCommand(firstName, lastName, email, phone);
+    string firstName, string lastName, string email, string phone
+  ) => new CustomerCreateCommand(firstName, 
+         lastName, email, phone
+       );
 
   public static (CustomerData, Error) MapCustomerCreateResult(
-    Customer customer, Error error) 
+    Customer customer, Error error
+  ) 
   {
-    if (error != null) return (null, error);
-    return (new CustomerData(customer.CustomerId, 
-      customer.FirstName, customer.LastName, customer.Email, 
-      customer.Phone), null);
+    if (error != null)
+    { 
+      return (null, error);
+    }
+    var data = new CustomerData(customer.CustomerId, 
+      customer.FirstName, customer.LastName, 
+      customer.Email, customer.Phone
+    );
+    return (data, null);
   }
 }
 public record CustomerCreateCommand(string FirstName,
   string LastName, 
   string Email, 
-  string Phone);
+  string Phone
+);
 public record CustomerData(Guid CustomerId,
   string FirstName, 
   string LastName, 
   string Email, 
-  string Phone);
+  string Phone
+);
+public record CustomerReadRequest(Guid CustomerId);
 
-public record CreateCustomerHandler(CustomerCreateCommand command)
+public static ImmutableHashSet<Customer> _customerDb = ImmutableHashSet<Customer>.Empty;
+
+public record CreateCustomerHandler
 {
   public static async Task<(CustomerData, Error)> Handle(
-    CustomerCreateCommand command)
+    CustomerCreateCommand command,
+    CreateCustomerAction createCustomer
+  ) 
   {
     var customer = 
       Customer.MapCustomerCreateCommandToCustomer(command);
     var result = Customer.MapCustomerCreateResult(customer, null);
-    // Todo: Save customer to database
+    // Save customer to database
+    await createCustomer(customer);
     return await Task.FromResult(result);
   }
+}
+
+public record ReadCustomerHandler
+{
+  public static async Task<(CustomerData, Error)> Handle(
+    CustomerReadRequest request,
+    ReadCustomerAction readCustomer
+  ) 
+  {
+    var customer = await readCustomer(request);
+    var result = Customer.MapCustomerCreateResult(customer, null);
+    return await Task.FromResult(result);
+  }
+}
+
+// Actions Defs
+public delegate Task<(Customer, Error)> CreateCustomerAction(
+  Customer customer
+);
+public delegate Task<Customer> ReadCustomerAction(
+  CustomerReadRequest request
+);
+
+// Actions Handlers
+public async static Task<(Customer, Error)> CreateCustomerActionHandlerAsync(
+  Customer customer
+) 
+{
+  // depends on data store or api resource
+  _customerDb = _customerDb.Add(customer);
+  (Customer, Error) result = (customer, null);
+  return await Task.FromResult(result);
+}
+public async static Task<Customer> ReadCustomerActionHandlerAsync(
+  CustomerReadRequest request
+) 
+{
+  // depends on data store or api resource
+  var customer = _customerDb.FirstOrDefault(c => c.CustomerId == request.CustomerId);
+  return await Task.FromResult(customer);
 }
 
 /*--------------------------------------------------------------*\
@@ -68,12 +127,84 @@ public record EmailMessage(string From,
 
 public record Error(string Message);
 
-
 /*--------------------------------------------------------------*\
   tests to run
 \*--------------------------------------------------------------*/
 void Describe(string description){}
 
+// Test #4 : CreateCustomerHandler.Handle
+Describe(
+  @"When CreateCustomerHandler.Handle is called with command 
+  FirstName='Jane', 
+  LastName='Parker'
+  Email='jane.parker@dependencyinjection.com'
+  and Phone='123-456-7890'; and passing parameterized dependency
+  for storing customer in the database and can be retrieved later; 
+  then Customer with correct data should be created & returned."
+);
+
+// Arrange
+var dataT4 = new {
+  FirstName = "Jane",
+  LastName = "Parker",
+  Email = "jane.parker@dependencyinjection.com",
+  Phone = "123-456-7890"
+};
+CustomerCreateCommand command = Customer.BuildCustomerCreateCommand(
+  dataT4.FirstName,
+  dataT4.LastName,
+  dataT4.Email,
+  dataT4.Phone
+);
+
+// Act
+(CustomerData, Error) sut4 = 
+  await CreateCustomerHandler.Handle(command, 
+    CreateCustomerActionHandlerAsync
+  );
+
+// Assert
+var (customerData, _) = sut4; 
+var assertPassT4 = (
+  customerData.CustomerId != Guid.Empty &&
+  customerData.FirstName == command.FirstName &&
+  customerData.LastName == command.LastName &&
+  customerData.Email == command.Email &&
+  customerData.Phone == command.Phone
+);
+
+WriteLine("Test #4: {0} --data write", assertPassT4 
+  ? "Passed [:-)" : "Failed [:-(");
+
+(CustomerData, Error) sut5 = await ReadCustomerHandler.Handle(
+  new CustomerReadRequest(customerData.CustomerId), 
+  ReadCustomerActionHandlerAsync
+);
+
+var (customerDataB, _) = sut5;
+var assertPassT4B = (
+  customerDataB.CustomerId == customerData.CustomerId
+);
+
+WriteLine("Test #4: {0} --data read", assertPassT4B 
+  ? "Passed [:-)" : "Failed [:-(");
+
+if (!assertPassT4) 
+{
+  WriteLine(
+    @"[Actual: 
+    FirstName  = {0}, 
+    LastName   = {1}, 
+    Email      = {2}, 
+    Phone      = {3},
+    CustomerId = {4}]", 
+    customerData.FirstName, 
+    customerData.LastName, 
+    customerData.Email, 
+    customerData.Phone,
+    customerData.CustomerId);
+}
+/*
 // Test #3 : CreateCustomerHandler.Handle
 Describe(
   @"When CreateCustomerHandler.Handle is called with command 
@@ -81,7 +212,8 @@ Describe(
   LastName='Parker'
   Email='jane.parker@dependencyinjection.com'
   and Phone='123-456-7890'
-  then Customer with correct data should be created & returned.");
+  then Customer with correct data should be created & returned."
+);
 
 // Arrange
 var dataT3 = new {
@@ -128,7 +260,7 @@ if (!assertPassT3)
     customerData.Phone,
     customerData.CustomerId);
 }
-/*
+
 // Test #2 : Customer.MapCustomerCreateCommandToCustomer
 Describe(
   @"When CustomerMapper.MapCustomerCreateCommandToCustomer is called with 
@@ -136,7 +268,8 @@ Describe(
   lastName='Parker'
   email='jane.parker@dependencyinjection.com'
   and phone='123-456-7890'
-  then Customer with correct data should be returned.");
+  then Customer with correct data should be returned."
+);
 
 // Arrange
 var dataT2 = new {
@@ -149,7 +282,8 @@ CustomerCreateCommand command = Customer.BuildCustomerCreateCommand(
   dataT2.FirstName,
   dataT2.LastName,
   dataT2.Email,
-  dataT2.Phone);
+  dataT2.Phone
+);
 
 // Act
 Customer sutT2 = Customer.MapCustomerCreateCommandToCustomer(command);
@@ -159,7 +293,8 @@ var assertPassT2 = (
   sutT2.FirstName == command.FirstName &&
   sutT2.LastName == command.LastName &&
   sutT2.Email == command.Email &&
-  sutT2.Phone == command.Phone);
+  sutT2.Phone == command.Phone
+);
 
 WriteLine("Test #2: {0}", assertPassT2 
   ? "Passed [:-)" : "Failed [:-(");
@@ -175,7 +310,8 @@ if (!assertPassT2)
     sutT2.FirstName, 
     sutT2.LastName, 
     sutT2.Email, 
-    sutT2.Phone);
+    sutT2.Phone
+  );
 }
 
 // Test #1 : Customer.BuildCustomerCreateCommand
@@ -185,7 +321,8 @@ Describe(
   lastName='Parker'
   email='jane.parker@dependencyinjection.com'
   and phone='123-456-7890'
-  then CustomerCreateCommand with correct data should be returned.");
+  then CustomerCreateCommand with correct data should be returned."
+);
 
 // Arrange
 var data = new {
@@ -200,14 +337,16 @@ CustomerCreateCommand sut = Customer.BuildCustomerCreateCommand(
   data.FirstName,
   data.LastName,
   data.Email,
-  data.Phone);
+  data.Phone
+);
 
 // Assert
 var assertPass = (
   sut.FirstName == data.FirstName &&
   sut.LastName == data.LastName &&
   sut.Email == data.Email &&
-  sut.Phone == data.Phone);
+  sut.Phone == data.Phone
+);
 
 WriteLine("Test #1: {0}", assertPass 
   ? "Passed [:-)" : "Failed [:-(");
@@ -223,7 +362,8 @@ if (!assertPass)
     sut.FirstName, 
     sut.LastName, 
     sut.Email, 
-    sut.Phone);
+    sut.Phone
+  );
 }
 */
 
