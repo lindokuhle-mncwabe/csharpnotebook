@@ -1,0 +1,62 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Exception Handling
+--------------------------------
+
+```csharp
+
+using System;
+using System.Collections.Immutable;
+using System.Text.Json;
+using static System.Console;
+
+#nullable enable
+
+/*--------------------------------------------------------------
+  Exception Handling 
+--------------------------------------------------------------*/
+public sealed record Either<T, TError>
+{
+  public T? Value { get; }
+  public TError? Error { get; }
+
+  private Either(T value, TError error)
+  {
+      Value = value;
+      Error = error;
+  }
+
+  public static Either<T, TError> Ok(T value) 
+    => new(value, default!);
+
+  public static Either<T, TError> Fail(TError error) 
+    => new(default!, error);
+
+  public TResult Match<TResult>(Func<T, TResult> ok, 
+    Func<TError, TResult> fail
+  ) => Error != null 
+    ? fail(Error)
+    : ok(Value!); 
+}
+
+public static Either<int, string> Divide(int dividend, 
+  int divisor
+) => divisor == 0 
+  ? Either<int, string>.Fail("Divisor cannot be zero") 
+  : Either<int, string>.Ok(dividend / divisor);
+
+Either<int, string> result = Divide(10, 0);
+WriteLine(result);
+
+string output = result.Match(
+    value => $"Result: {value}",
+    error => $"Result: {error}"
+);
+
+WriteLine(output);
+
+```
