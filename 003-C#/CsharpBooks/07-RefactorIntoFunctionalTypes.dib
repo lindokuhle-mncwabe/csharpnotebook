@@ -1,3 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Functional Types
+------------------------------
+
+```csharp
 
 using System;
 using System.Collections.Immutable;
@@ -101,61 +111,4 @@ string answer = Divide(10, 2).Match(
 
 WriteLine(answer);
 
-/*--------------------------------------------------------------
-  Test #1 : 
---------------------------------------------------------------*/
-/*{
-  Describe(
-    @"When Customer.BuildCustomerCreateCommand is called with 
-    firstName='Jane', 
-    lastName='Parker'
-    email='jane.parker@dependencyinjection.com'
-    and phone='123-456-7890'
-    then CustomerCreateCommand with correct data should be returned."
-  );
-
-  // Arrange
-  var data = new {
-    FirstName = "Jane",
-    LastName = "Parker",
-    Email = "jane.parker@dependencyinjection.com",
-    Phone = "123-456-7890"
-  };
-
-  // Act
-  CustomerCreateCommand sut = Customer.BuildCustomerCreateCommand(
-    data.FirstName,
-    data.LastName,
-    data.Email,
-    data.Phone
-  );
-
-  // Assert
-  var assertPass = (
-    sut.FirstName == data.FirstName &&
-    sut.LastName == data.LastName &&
-    sut.Email == data.Email &&
-    sut.Phone == data.Phone
-  );
-
-  WriteLine("Test #1: {0}", assertPass 
-    ? "Passed [:-)" : "Failed [:-(");
-
-  // Output
-  if (!assertPass) 
-  {
-    WriteLine(
-      @"[Actual: 
-      FirstName = {0}, 
-      LastName  = {1}, 
-      Email     = {2}, 
-      Phone     = {3}]", 
-      sut.FirstName, 
-      sut.LastName, 
-      sut.Email, 
-      sut.Phone
-    );
-  }
-}
-
-*/
+```
