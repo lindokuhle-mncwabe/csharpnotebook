@@ -1,3 +1,12 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+Refactor Into Fluent Build
+--------------------------
+```csharp
 
 using System;
 using System.Collections.Immutable;
@@ -128,3 +137,5 @@ new JsonSerializerOptions
 }));
 
 // Output: {"Size":"Small","Dough":"Thin","Sauce":"White","Toppings":["Cheese","Pepperoni","Sausage"],"Herb":"Oregano"}
+
+```

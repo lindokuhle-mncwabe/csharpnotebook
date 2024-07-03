@@ -53,6 +53,8 @@ public static ImmutableHashSet<string> GetBestList() {
     list = list.Add("Hello"); // duplicate blocked
     list = list.Add("World"); // duplicate blocked
     return list;
+
+    // return ImmutableHashSet.Create("Hello", "World", "Hello", "World");
 }
 var bestList = GetBestList();
 bestList.Add("I just mutated the list"); // egnored
